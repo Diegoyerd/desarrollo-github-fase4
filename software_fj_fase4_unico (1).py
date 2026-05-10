@@ -70,6 +70,13 @@ class ErrorCalculoCosto(ErrorSistema):
     """Se lanza cuando no es posible calcular correctamente un costo."""
     pass
 
+class ErrorReservaDuplicada(ErrorReserva):
+    """
+    Se lanza cuando se intenta crear una reserva que ya existe
+    para el mismo cliente, servicio y duración.
+    """
+    pass
+
 
 # ============================================================
 # CLASE ABSTRACTA GENERAL
@@ -307,6 +314,8 @@ class ReservaSala(Servicio):
         """Describe el servicio de sala."""
         return f"Reserva de sala con capacidad para {self.capacidad} personas."
 
+    
+
 
 # ============================================================
 # SERVICIO 2: ALQUILER DE EQUIPO
@@ -490,8 +499,31 @@ class Reserva(EntidadSistema):
             f"Duración: {self.duracion} | "
             f"Estado: {self.estado}"
         )
+    @staticmethod
+    def verificar_duplicado(reservas: list, cliente: Cliente, servicio: Servicio, duracion: float):
+        """
+        Verifica que no exista una reserva activa con el mismo cliente,
+        servicio y duración. Solo considera reservas en estado
+        'Creada' o 'Confirmada' como activas (no las canceladas ni procesadas).
+        """
+    for reserva in reservas:
+        # Se ignoran reservas canceladas y procesadas.
+        if reserva.estado in ("Cancelada", "Procesada"):
+            continue
 
+        # Se compara cliente, servicio y duración al mismo tiempo.
+        misma_combinacion = (
+            reserva.cliente.identificador == cliente.identificador
+            and reserva.servicio.identificador == servicio.identificador
+            and reserva.duracion == duracion
+        )
 
+        if misma_combinacion:
+            raise ErrorReservaDuplicada(
+                f"Ya existe una reserva activa para el cliente "
+                f"'{cliente.nombre}' con el servicio "
+                f"'{servicio.nombre}' y duración de {duracion} hora(s)."
+            )
 # ============================================================
 # FUNCIONES DE APOYO PARA LA SIMULACIÓN
 # ============================================================
