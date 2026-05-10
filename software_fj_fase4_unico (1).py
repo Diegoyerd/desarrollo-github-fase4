@@ -762,6 +762,42 @@ def main():
     print("Los eventos y errores quedaron registrados en logs/software_fj.log")
     print("=" * 70)
 
+# ------------------------------------------------------------
+# OPERACIÓN 16: Intentar crear una reserva duplicada.
+# ------------------------------------------------------------
+def op16():
+    # Primero se crea una reserva nueva (servicios[2] = AsesoriaEspecializada).
+    reserva_original = Reserva("R005", clientes[0], servicios[2], duracion=2)
+    reservas.append(reserva_original)
+
+    # Se verifica antes de crear la segunda con los mismos datos.
+    Reserva.verificar_duplicado(reservas, clientes[0], servicios[2], duracion=2)
+
+    # Esta línea no se ejecuta porque la anterior lanza excepción.
+    reserva_copia = Reserva("R006", clientes[0], servicios[2], duracion=2)
+    reservas.append(reserva_copia)
+    return reserva_copia.mostrar_informacion()
+
+ejecutar_operacion(16, "Intentar crear reserva duplicada activa", op16)
+
+# ------------------------------------------------------------
+# OPERACIÓN 17: Crear reserva con mismos datos pero la original cancelada.
+# ------------------------------------------------------------
+def op17():
+    # Se cancela la reserva original.
+    reservas[-1].cancelar("Prueba de duplicado con cancelación")
+
+    # Ahora la verificación NO debe lanzar excepción porque la original
+    # está cancelada y no cuenta como activa.
+    Reserva.verificar_duplicado(reservas, clientes[0], servicios[2], duracion=2)
+
+    # Se crea la nueva reserva sin problema.
+    reserva_nueva = Reserva("R006", clientes[0], servicios[2], duracion=2)
+    reservas.append(reserva_nueva)
+    return reserva_nueva.mostrar_informacion()
+
+ejecutar_operacion(17, "Crear reserva válida tras cancelar la duplicada", op17)
+
 
 # ============================================================
 # PUNTO DE ENTRADA DEL PROGRAMA
