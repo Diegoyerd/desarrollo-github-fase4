@@ -308,18 +308,6 @@ El sistema ejecuta **17 operaciones** de prueba que cubren escenarios válidos e
 
 ---
 
-## 👥 Integrantes del equipo
-
-| Nombre | Rol en el proyecto |
-|---|---|
-| [Nombre 1] | [Ej: Clases base y excepciones] |
-| [Nombre 2] | [Ej: Servicios y cálculo de costos] |
-| [Nombre 3] | [Ej: Clase Reserva y estados] |
-| [Nombre 4] | [Ej: Simulación y operaciones] |
-| [Nombre 5] | [Ej: README y documentación] |
-
----
-
 ## 📄 Licencia
 
 Proyecto académico desarrollado para la **Universidad Nacional Abierta y a Distancia — UNAD**.  
