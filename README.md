@@ -245,4 +245,84 @@ ErrorSistema  (Excepción base del sistema)
 
 ---
 
+## ▶️ Cómo ejecutar el proyecto
+
+### Requisitos
+
+- Python 3.8 o superior
+- No requiere librerías externas (solo módulos estándar: `abc`, `re`, `logging`, `datetime`)
+
+### Pasos
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/[usuario]/software-fj-fase4.git
+
+# 2. Ingresar a la carpeta del proyecto
+cd software-fj-fase4
+
+# 3. Ejecutar el sistema
+python main.py
+```
+
+Los resultados se muestran en consola y los eventos quedan registrados en `logs/software_fj.log`.
+
+---
+
+## 🧪 Simulaciones incluidas
+
+El sistema ejecuta **17 operaciones** de prueba que cubren escenarios válidos e inválidos:
+
+| # | Descripción | Resultado esperado |
+|---|---|---|
+| 1 | Registrar cliente válido | ✅ Éxito |
+| 2 | Cliente con correo inválido | ❌ `ErrorValidacion` |
+| 3 | Cliente con teléfono inválido | ❌ `ErrorValidacion` |
+| 4 | Crear servicio de sala válido | ✅ Éxito |
+| 5 | Crear servicio de alquiler válido | ✅ Éxito |
+| 6 | Crear servicio de asesoría válido | ✅ Éxito |
+| 7 | Servicio con tarifa negativa | ❌ `ErrorValidacion` |
+| 8 | Tarifa no numérica con excepción encadenada | ❌ `ErrorValidacion` (encadenada desde `ValueError`) |
+| 9 | Crear reserva válida | ✅ Éxito |
+| 10 | Confirmar reserva | ✅ Éxito |
+| 11 | Procesar reserva con IVA y descuento | ✅ Costo calculado |
+| 12 | Cancelar reserva ya procesada | ❌ `ErrorReserva` |
+| 13 | Reserva con duración excesiva | ❌ `ErrorReserva` |
+| 14 | Reserva sobre servicio no disponible | ❌ `ErrorServicioNoDisponible` |
+| 15 | Procesar reserva sin confirmar | ❌ `ErrorReserva` |
+| 16 | Crear reserva duplicada activa | ❌ `ErrorReservaDuplicada` |
+| 17 | Crear reserva tras cancelar la duplicada | ✅ Éxito |
+
+---
+
+## 🛡️ Técnicas de manejo de excepciones implementadas
+
+| Técnica | Dónde se aplica |
+|---|---|
+| `try / except` | `ejecutar_operacion()` — captura errores sin detener el sistema |
+| `try / except / else` | `procesar()` — el bloque `else` solo corre si no hay error |
+| `try / except / finally` | `procesar()` — el `finally` siempre registra el intento |
+| Excepciones personalizadas | Jerarquía propia basada en `ErrorSistema` |
+| Encadenamiento (`raise ... from`) | `crear_servicio_con_encadenamiento()` |
+| Logging de errores y eventos | Cada operación registra su resultado en `software_fj.log` |
+
+---
+
+## 👥 Integrantes del equipo
+
+| Nombre | Rol en el proyecto |
+|---|---|
+| [Nombre 1] | [Ej: Clases base y excepciones] |
+| [Nombre 2] | [Ej: Servicios y cálculo de costos] |
+| [Nombre 3] | [Ej: Clase Reserva y estados] |
+| [Nombre 4] | [Ej: Simulación y operaciones] |
+| [Nombre 5] | [Ej: README y documentación] |
+
+---
+
+## 📄 Licencia
+
+Proyecto académico desarrollado para la **Universidad Nacional Abierta y a Distancia — UNAD**.  
+Uso exclusivo con fines educativos.
+
  

@@ -77,6 +77,13 @@ class ErrorReservaDuplicada(ErrorReserva):
     """
     pass
 
+class ErrorParametrosCosto(ErrorCalculoCosto):
+    """
+    Se lanza cuando los parámetros de impuesto o descuento
+    para calcular el costo tienen valores fuera de rango permitido.
+    """
+    pass
+
 
 # ============================================================
 # CLASE ABSTRACTA GENERAL
@@ -253,6 +260,142 @@ class Servicio(EntidadSistema):
         costo_final = costo_con_descuento * (1 + impuesto)
 
         return round(costo_final, 2)
+        # ============================================================
+# CLASE ABSTRACTA SERVICIO
+# ============================================================
+
+class Servicio(EntidadSistema):
+    """
+    Clase abstracta para representar servicios ofrecidos por Software FJ.
+    Las clases hijas deben calcular costo, describir servicio y validar parámetros.
+    """
+
+    def __init__(self, identificador: str, nombre: str, tarifa_base: float, disponible: bool = True):
+        # Se inicializa la clase padre.
+        super().__init__(identificador)
+
+        # Se valida el nombre del servicio.
+        if not nombre or len(nombre.strip()) < 3:
+            raise ErrorValidacion("El nombre del servicio debe tener mínimo 3 caracteres.")
+
+        # Se valida la tarifa base.
+        if tarifa_base <= 0:
+            raise ErrorValidacion("La tarifa base del servicio debe ser mayor que cero.")
+
+        # Se asignan atributos protegidos.
+        self._nombre = nombre.strip().title()
+        self._tarifa_base = float(tarifa_base)
+        self._disponible = disponible
+
+        # Se registra el evento.
+        logging.info(f"Servicio creado: {self._nombre}")
+
+    @property
+    def nombre(self):
+        """Devuelve el nombre del servicio."""
+        return self._nombre
+
+    @property
+    def disponible(self):
+        """Devuelve si el servicio está disponible."""
+        return self._disponible
+
+    def cambiar_disponibilidad(self, disponible: bool):
+        """Permite activar o desactivar el servicio."""
+        self._disponible = bool(disponible)
+        logging.info(f"Disponibilidad actualizada para {self._nombre}: {self._disponible}")
+
+    def calcular_costo_con_opciones(
+        self,
+        duracion: float,
+        impuesto: float = 0.0,
+        descuento: float = 0.0
+    ):
+        """
+        Simula sobrecarga de métodos mediante parámetros opcionales.
+        Permite calcular el costo normal, con impuesto, con descuento,
+        o con impuesto y descuento al mismo tiempo.
+        """
+        costo_base = self.calcular_costo(duracion)
+
+        # Se valida el impuesto.
+        if impuesto < 0:
+            raise ErrorCalculoCosto("El impuesto no puede ser negativo.")
+
+        # Se valida el descuento.
+        if descuento < 0 or descuento > 1:
+            raise ErrorCalculoCosto("El descuento debe estar entre 0 y 1.")
+
+        # Se calcula el costo final.
+        costo_con_descuento = costo_base * (1 - descuento)
+        costo_final = costo_con_descuento * (1 + impuesto)
+
+        return round(costo_final, 2)
+
+    @staticmethod
+    def validar_parametros_costo(impuesto: float, descuento: float):
+        """
+        Valida que los parámetros de impuesto y descuento estén
+        dentro de rangos razonables antes de calcular el costo.
+
+        Reglas:
+        - El impuesto no puede superar el 100% (valor 1.0).
+        - El descuento debe estar entre 0 y 1 (0% a 100%).
+        - Juntos no pueden hacer que el costo final sea cero o negativo,
+        es decir, el descuento no puede ser 1.0 (100%) simultáneamente
+        con cualquier impuesto.
+        """
+        # Se valida que el impuesto no sea mayor al 100%.
+        if impuesto > 1.0:
+            raise ErrorParametrosCosto(
+                f"El impuesto no puede superar el 100%. "
+                f"Valor recibido: {impuesto * 100:.0f}%."
+            )
+        
+        # Se valida que el descuento esté entre 0 y 1.
+        if descuento < 0 or descuento > 1:
+            raise ErrorParametrosCosto(
+                f"El descuento debe estar entre 0% y 100%. "
+                f"Valor recibido: {descuento * 100:.0f}%."
+            )
+
+        # Se valida que el descuento no sea del 100% con cualquier impuesto,
+        # ya que haría el costo final igual a cero.
+        if descuento == 1.0 and impuesto > 0:
+            raise ErrorParametrosCosto(
+                "No se puede aplicar un descuento del 100% junto con un impuesto. "
+                "El costo final sería cero antes de aplicar el impuesto."
+            )
+
+        logging.info(
+            f"Parámetros de costo validados: impuesto={impuesto*100:.0f}%, "
+        f"descuento={descuento*100:.0f}%."
+    )
+
+    @abstractmethod
+    def calcular_costo(self, duracion: float):
+        """Calcula el costo del servicio."""
+        pass
+
+    @abstractmethod
+    def describir_servicio(self):
+        """Describe el servicio."""
+        pass
+
+    @abstractmethod
+    def validar_parametros(self, duracion: float):
+        """Valida parámetros específicos del servicio."""
+        pass
+
+    def mostrar_informacion(self):
+        """Muestra la información general del servicio."""
+        estado = "Disponible" if self._disponible else "No disponible"
+        return (
+            f"Servicio: {self._nombre} | "
+            f"Código: {self.identificador} | "
+            f"Tarifa base: ${self._tarifa_base:,.0f} | "
+            f"Estado: {estado}"
+        )
 
     @abstractmethod
     def calcular_costo(self, duracion: float):
@@ -787,6 +930,46 @@ def main():
         return reserva_nueva.mostrar_informacion()
 
     ejecutar_operacion(17, "Crear reserva válida tras cancelar la duplicada", op17)
+
+# ------------------------------------------------------------
+# OPERACIÓN 18: Calcular costo con combinaciones válidas
+# e inválidas de impuesto y descuento.
+# ------------------------------------------------------------
+    def op18():
+        servicio = servicios[2]
+        duracion = 4
+
+        # --- CASOS VÁLIDOS ---
+
+        # Caso 1: sin impuesto ni descuento.
+        Servicio.validar_parametros_costo(impuesto=0.0, descuento=0.0)
+        costo_base = servicio.calcular_costo_con_opciones(duracion)
+
+        # Caso 2: solo con impuesto del 19%.
+        Servicio.validar_parametros_costo(impuesto=0.19, descuento=0.0)
+        costo_con_iva = servicio.calcular_costo_con_opciones(duracion, impuesto=0.19)
+
+        # Caso 3: impuesto del 19% y descuento del 20%.
+        Servicio.validar_parametros_costo(impuesto=0.19, descuento=0.20)
+        costo_completo = servicio.calcular_costo_con_opciones(
+            duracion, impuesto=0.19, descuento=0.20
+        )
+
+        resultado = (
+            f"Servicio: {servicio.nombre} | Duración: {duracion}h\n"
+            f"  → Sin impuesto ni descuento  : ${costo_base:,.0f}\n"
+            f"  → Con IVA 19%                : ${costo_con_iva:,.0f}\n"
+            f"  → Con IVA 19% y descuento 20%: ${costo_completo:,.0f}"
+        )
+
+        # --- CASO INVÁLIDO ---
+        # Se intenta validar un impuesto del 250%, lo que debe
+        # lanzar ErrorParametrosCosto antes de calcular nada.
+        Servicio.validar_parametros_costo(impuesto=2.50, descuento=0.0)
+
+        return resultado
+
+    ejecutar_operacion(18, "Calcular costo con parámetros válidos e inválidos", op18)
 
 # ------------------------------------------------------------
 # OPERACIÓN 19: Intentar crear un cliente con identificador
