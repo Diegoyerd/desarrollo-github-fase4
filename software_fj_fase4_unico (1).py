@@ -506,10 +506,10 @@ class Reserva(EntidadSistema):
         servicio y duración. Solo considera reservas en estado
         'Creada' o 'Confirmada' como activas (no las canceladas ni procesadas).
         """
-    for reserva in reservas:
+        for reserva in reservas:
         # Se ignoran reservas canceladas y procesadas.
-        if reserva.estado in ("Cancelada", "Procesada"):
-            continue
+            if reserva.estado in ("Cancelada", "Procesada"):
+                continue
 
         # Se compara cliente, servicio y duración al mismo tiempo.
         misma_combinacion = (
@@ -752,7 +752,57 @@ def main():
 
     ejecutar_operacion(15, "Procesar reserva sin confirmarla", op15)
 
-    # Resumen final del sistema.
+# ------------------------------------------------------------
+# OPERACIÓN 16: Intentar crear una reserva duplicada.
+# ------------------------------------------------------------
+    def op16():
+        # Primero se crea una reserva nueva (servicios[2] = AsesoriaEspecializada).
+        reserva_original = Reserva("R005", clientes[0], servicios[2], duracion=2)
+        reservas.append(reserva_original)
+
+        # Se verifica antes de crear la segunda con los mismos datos.
+        Reserva.verificar_duplicado(reservas, clientes[0], servicios[2], duracion=2)
+
+        # Esta línea no se ejecuta porque la anterior lanza excepción.
+        reserva_copia = Reserva("R006", clientes[0], servicios[2], duracion=2)
+        reservas.append(reserva_copia)
+        return reserva_copia.mostrar_informacion()
+
+    ejecutar_operacion(16, "Intentar crear reserva duplicada activa", op16)
+
+# ------------------------------------------------------------
+# OPERACIÓN 17: Crear reserva con mismos datos pero la original cancelada.
+# ------------------------------------------------------------
+    def op17():
+        # Se cancela la reserva original.
+        reservas[-1].cancelar("Prueba de duplicado con cancelación")
+
+        # Ahora la verificación NO debe lanzar excepción porque la original
+        # está cancelada y no cuenta como activa.
+        Reserva.verificar_duplicado(reservas, clientes[0], servicios[2], duracion=2)
+
+        # Se crea la nueva reserva sin problema.
+        reserva_nueva = Reserva("R006", clientes[0], servicios[2], duracion=2)
+        reservas.append(reserva_nueva)
+        return reserva_nueva.mostrar_informacion()
+
+    ejecutar_operacion(17, "Crear reserva válida tras cancelar la duplicada", op17)
+
+# ------------------------------------------------------------
+# OPERACIÓN 19: Intentar crear un cliente con identificador
+# vacío, lo que dispara la validación de EntidadSistema.
+# ------------------------------------------------------------
+    def op19():
+        # Se pasa un identificador con solo espacios en blanco.
+        # La validación está en EntidadSistema._init_(), la clase
+        # base abstracta, demostrando que protege a todas las clases hijas.
+        cliente_invalido = Cliente("   ", "Pedro Ruiz", "pedro@email.com", "3012345678")
+        clientes.append(cliente_invalido)
+        return cliente_invalido.mostrar_informacion()
+
+    ejecutar_operacion(19, "Crear cliente con identificador vacío o en blanco", op19)
+
+# Resumen final del sistema.
     print("\n" + "=" * 70)
     print("RESUMEN FINAL")
     print("=" * 70)
@@ -761,43 +811,6 @@ def main():
     print(f"Reservas creadas correctamente: {len(reservas)}")
     print("Los eventos y errores quedaron registrados en logs/software_fj.log")
     print("=" * 70)
-
-# ------------------------------------------------------------
-# OPERACIÓN 16: Intentar crear una reserva duplicada.
-# ------------------------------------------------------------
-def op16():
-    # Primero se crea una reserva nueva (servicios[2] = AsesoriaEspecializada).
-    reserva_original = Reserva("R005", clientes[0], servicios[2], duracion=2)
-    reservas.append(reserva_original)
-
-    # Se verifica antes de crear la segunda con los mismos datos.
-    Reserva.verificar_duplicado(reservas, clientes[0], servicios[2], duracion=2)
-
-    # Esta línea no se ejecuta porque la anterior lanza excepción.
-    reserva_copia = Reserva("R006", clientes[0], servicios[2], duracion=2)
-    reservas.append(reserva_copia)
-    return reserva_copia.mostrar_informacion()
-
-ejecutar_operacion(16, "Intentar crear reserva duplicada activa", op16)
-
-# ------------------------------------------------------------
-# OPERACIÓN 17: Crear reserva con mismos datos pero la original cancelada.
-# ------------------------------------------------------------
-def op17():
-    # Se cancela la reserva original.
-    reservas[-1].cancelar("Prueba de duplicado con cancelación")
-
-    # Ahora la verificación NO debe lanzar excepción porque la original
-    # está cancelada y no cuenta como activa.
-    Reserva.verificar_duplicado(reservas, clientes[0], servicios[2], duracion=2)
-
-    # Se crea la nueva reserva sin problema.
-    reserva_nueva = Reserva("R006", clientes[0], servicios[2], duracion=2)
-    reservas.append(reserva_nueva)
-    return reserva_nueva.mostrar_informacion()
-
-ejecutar_operacion(17, "Crear reserva válida tras cancelar la duplicada", op17)
-
 
 # ============================================================
 # PUNTO DE ENTRADA DEL PROGRAMA

@@ -1,0 +1,108 @@
+2026-05-10 21:03:20,550 - ERROR - Operación 16 generó un error inesperado.
+Traceback (most recent call last):
+  File "c:\Users\PC\Desktop\FASE 4\FASE 4\desarrollo-github-fase4-1\software_fj_fase4_unico (1).py", line 542, in ejecutar_operacion
+    resultado = funcion()
+  File "c:\Users\PC\Desktop\FASE 4\FASE 4\desarrollo-github-fase4-1\software_fj_fase4_unico (1).py", line 770, in op16
+    reserva_original = Reserva("R005", clientes[0], servicios[2], duracion=2)
+                                       ^^^^^^^^
+NameError: name 'clientes' is not defined. Did you mean: 'Cliente'?
+2026-05-10 21:03:20,554 - ERROR - Operación 17 generó un error inesperado.
+Traceback (most recent call last):
+  File "c:\Users\PC\Desktop\FASE 4\FASE 4\desarrollo-github-fase4-1\software_fj_fase4_unico (1).py", line 542, in ejecutar_operacion
+    resultado = funcion()
+  File "c:\Users\PC\Desktop\FASE 4\FASE 4\desarrollo-github-fase4-1\software_fj_fase4_unico (1).py", line 788, in op17
+    reservas[-1].cancelar("Prueba de duplicado con cancelación")
+    ^^^^^^^^
+NameError: name 'reservas' is not defined. Did you mean: 'Reserva'?
+2026-05-10 21:03:20,782 - ERROR - Operación 19 fallida: El identificador no puede estar vacío.
+2026-05-10 21:03:20,783 - INFO - Cliente creado correctamente: Laura Martínez
+2026-05-10 21:03:20,783 - INFO - Operación 1 ejecutada correctamente.
+2026-05-10 21:03:20,784 - ERROR - Operación 2 fallida: El correo del cliente no tiene un formato válido.
+2026-05-10 21:03:20,785 - ERROR - Operación 3 fallida: El teléfono debe contener solo números y mínimo 7 dígitos.
+2026-05-10 21:03:20,785 - INFO - Servicio creado: Sala De Juntas
+2026-05-10 21:03:20,806 - INFO - Operación 4 ejecutada correctamente.
+2026-05-10 21:03:20,807 - INFO - Servicio creado: Alquiler Computador Portátil
+2026-05-10 21:03:20,808 - INFO - Operación 5 ejecutada correctamente.
+2026-05-10 21:03:20,808 - INFO - Servicio creado: Asesoría En Software
+2026-05-10 21:03:20,808 - INFO - Operación 6 ejecutada correctamente.
+2026-05-10 21:03:20,809 - ERROR - Operación 7 fallida: La tarifa base del servicio debe ser mayor que cero.
+2026-05-10 21:03:20,809 - ERROR - Operación 8 fallida: No fue posible crear el servicio porque la tarifa no es numérica.
+2026-05-10 21:03:20,810 - INFO - Reserva creada correctamente: R001
+2026-05-10 21:03:20,810 - INFO - Operación 9 ejecutada correctamente.
+2026-05-10 21:03:20,810 - INFO - Reserva confirmada: R001
+2026-05-10 21:03:20,810 - INFO - Operación 10 ejecutada correctamente.
+2026-05-10 21:03:20,811 - INFO - Reserva procesada correctamente: R001. Costo: 160650.0
+2026-05-10 21:03:20,811 - INFO - Finalizó intento de procesamiento para reserva: R001
+2026-05-10 21:03:20,811 - INFO - Operación 11 ejecutada correctamente.
+2026-05-10 21:03:20,811 - ERROR - Operación 12 fallida: No se puede cancelar una reserva ya procesada.
+2026-05-10 21:03:20,811 - ERROR - Operación 13 fallida: Una sala no puede reservarse por más de 8 horas continuas.
+2026-05-10 21:03:20,812 - INFO - Disponibilidad actualizada para Alquiler Computador Portátil: False
+2026-05-10 21:03:20,812 - ERROR - Operación 14 fallida: El servicio Alquiler Computador Portátil no se encuentra disponible.
+2026-05-10 21:03:20,812 - INFO - Reserva creada correctamente: R004
+2026-05-10 21:03:20,812 - ERROR - Error al procesar reserva R004: La reserva debe estar confirmada antes de procesarse.
+2026-05-10 21:03:20,813 - INFO - Finalizó intento de procesamiento para reserva: R004
+2026-05-10 21:03:20,813 - ERROR - Operación 15 fallida: La reserva debe estar confirmada antes de procesarse.
+2026-05-10 21:09:15,753 - INFO - Cliente creado correctamente: Laura Martínez
+2026-05-10 21:09:15,753 - INFO - Operación 1 ejecutada correctamente.
+2026-05-10 21:09:15,754 - ERROR - Operación 2 fallida: El correo del cliente no tiene un formato válido.
+2026-05-10 21:09:15,754 - ERROR - Operación 3 fallida: El teléfono debe contener solo números y mínimo 7 dígitos.
+2026-05-10 21:09:15,754 - INFO - Servicio creado: Sala De Juntas
+2026-05-10 21:09:15,755 - INFO - Operación 4 ejecutada correctamente.
+2026-05-10 21:09:15,755 - INFO - Servicio creado: Alquiler Computador Portátil
+2026-05-10 21:09:15,756 - INFO - Operación 5 ejecutada correctamente.
+2026-05-10 21:09:15,756 - INFO - Servicio creado: Asesoría En Software
+2026-05-10 21:09:15,756 - INFO - Operación 6 ejecutada correctamente.
+2026-05-10 21:09:15,757 - ERROR - Operación 7 fallida: La tarifa base del servicio debe ser mayor que cero.
+2026-05-10 21:09:15,757 - ERROR - Operación 8 fallida: No fue posible crear el servicio porque la tarifa no es numérica.
+2026-05-10 21:09:15,758 - INFO - Reserva creada correctamente: R001
+2026-05-10 21:09:15,758 - INFO - Operación 9 ejecutada correctamente.
+2026-05-10 21:09:15,759 - INFO - Reserva confirmada: R001
+2026-05-10 21:09:15,760 - INFO - Operación 10 ejecutada correctamente.
+2026-05-10 21:09:15,761 - INFO - Reserva procesada correctamente: R001. Costo: 160650.0
+2026-05-10 21:09:15,761 - INFO - Finalizó intento de procesamiento para reserva: R001
+2026-05-10 21:09:15,761 - INFO - Operación 11 ejecutada correctamente.
+2026-05-10 21:09:15,762 - ERROR - Operación 12 fallida: No se puede cancelar una reserva ya procesada.
+2026-05-10 21:09:15,767 - ERROR - Operación 13 fallida: Una sala no puede reservarse por más de 8 horas continuas.
+2026-05-10 21:09:15,769 - INFO - Disponibilidad actualizada para Alquiler Computador Portátil: False
+2026-05-10 21:09:15,769 - ERROR - Operación 14 fallida: El servicio Alquiler Computador Portátil no se encuentra disponible.
+2026-05-10 21:09:15,770 - INFO - Reserva creada correctamente: R004
+2026-05-10 21:09:15,770 - ERROR - Error al procesar reserva R004: La reserva debe estar confirmada antes de procesarse.
+2026-05-10 21:09:15,770 - INFO - Finalizó intento de procesamiento para reserva: R004
+2026-05-10 21:09:15,770 - ERROR - Operación 15 fallida: La reserva debe estar confirmada antes de procesarse.
+2026-05-10 21:09:15,771 - INFO - Reserva creada correctamente: R005
+2026-05-10 21:09:15,771 - ERROR - Operación 16 fallida: Ya existe una reserva activa para el cliente 'Laura Martínez' con el servicio 'Asesoría En Software' y duración de 2 hora(s).
+2026-05-10 21:09:15,772 - INFO - Reserva cancelada: R005. Motivo: Prueba de duplicado con cancelación
+2026-05-10 21:09:15,772 - ERROR - Operación 17 fallida: Ya existe una reserva activa para el cliente 'Laura Martínez' con el servicio 'Asesoría En Software' y duración de 2 hora(s).
+2026-05-10 21:09:15,772 - ERROR - Operación 19 fallida: El identificador no puede estar vacío.
+2026-05-10 21:11:38,306 - INFO - Cliente creado correctamente: Laura Martínez
+2026-05-10 21:11:38,307 - INFO - Operación 1 ejecutada correctamente.
+2026-05-10 21:11:38,307 - ERROR - Operación 2 fallida: El correo del cliente no tiene un formato válido.
+2026-05-10 21:11:38,308 - ERROR - Operación 3 fallida: El teléfono debe contener solo números y mínimo 7 dígitos.
+2026-05-10 21:11:38,308 - INFO - Servicio creado: Sala De Juntas
+2026-05-10 21:11:38,309 - INFO - Operación 4 ejecutada correctamente.
+2026-05-10 21:11:38,309 - INFO - Servicio creado: Alquiler Computador Portátil
+2026-05-10 21:11:38,309 - INFO - Operación 5 ejecutada correctamente.
+2026-05-10 21:11:38,309 - INFO - Servicio creado: Asesoría En Software
+2026-05-10 21:11:38,310 - INFO - Operación 6 ejecutada correctamente.
+2026-05-10 21:11:38,310 - ERROR - Operación 7 fallida: La tarifa base del servicio debe ser mayor que cero.
+2026-05-10 21:11:38,310 - ERROR - Operación 8 fallida: No fue posible crear el servicio porque la tarifa no es numérica.
+2026-05-10 21:11:38,311 - INFO - Reserva creada correctamente: R001
+2026-05-10 21:11:38,311 - INFO - Operación 9 ejecutada correctamente.
+2026-05-10 21:11:38,311 - INFO - Reserva confirmada: R001
+2026-05-10 21:11:38,312 - INFO - Operación 10 ejecutada correctamente.
+2026-05-10 21:11:38,313 - INFO - Reserva procesada correctamente: R001. Costo: 160650.0
+2026-05-10 21:11:38,313 - INFO - Finalizó intento de procesamiento para reserva: R001
+2026-05-10 21:11:38,314 - INFO - Operación 11 ejecutada correctamente.
+2026-05-10 21:11:38,314 - ERROR - Operación 12 fallida: No se puede cancelar una reserva ya procesada.
+2026-05-10 21:11:38,314 - ERROR - Operación 13 fallida: Una sala no puede reservarse por más de 8 horas continuas.
+2026-05-10 21:11:38,315 - INFO - Disponibilidad actualizada para Alquiler Computador Portátil: False
+2026-05-10 21:11:38,315 - ERROR - Operación 14 fallida: El servicio Alquiler Computador Portátil no se encuentra disponible.
+2026-05-10 21:11:38,315 - INFO - Reserva creada correctamente: R004
+2026-05-10 21:11:38,315 - ERROR - Error al procesar reserva R004: La reserva debe estar confirmada antes de procesarse.
+2026-05-10 21:11:38,315 - INFO - Finalizó intento de procesamiento para reserva: R004
+2026-05-10 21:11:38,316 - ERROR - Operación 15 fallida: La reserva debe estar confirmada antes de procesarse.
+2026-05-10 21:11:38,316 - INFO - Reserva creada correctamente: R005
+2026-05-10 21:11:38,316 - ERROR - Operación 16 fallida: Ya existe una reserva activa para el cliente 'Laura Martínez' con el servicio 'Asesoría En Software' y duración de 2 hora(s).
+2026-05-10 21:11:38,317 - INFO - Reserva cancelada: R005. Motivo: Prueba de duplicado con cancelación
+2026-05-10 21:11:38,317 - ERROR - Operación 17 fallida: Ya existe una reserva activa para el cliente 'Laura Martínez' con el servicio 'Asesoría En Software' y duración de 2 hora(s).
+2026-05-10 21:11:38,317 - ERROR - Operación 19 fallida: El identificador no puede estar vacío.
